@@ -57,17 +57,28 @@ class AnnouceList extends Component {
     const { announcements } = this.state;
     return (
       <div>
-        <button onClick={this.sortByLastName}>Sort by last name</button>
+        <Row>
+          <Col sm="4" />
+          <Col sm="4">
+            <button onClick={this.sortByLastName}>Sort by last name</button>
+          </Col>
+          <Col sm="4" />
+        </Row>
+
         {announcements.map(announcement => {
           return (
             <Card key={announcement._id}>
               <CardText sm="8">
-                <CardTitle>{`${announcement.name.first} ${
-                  announcement.name.last
-                }`}</CardTitle>
-                <CardTitle style={{ fontSize: '1.3em' }}>
-                  {moment(announcement.creationDate).format('MM/DD/YYYY')}
-                </CardTitle>
+                <div>
+                  <StyledUl>
+                    <CardTitle>{`${announcement.name.first} ${
+                      announcement.name.last
+                    }`}</CardTitle>
+                    <CardDate>
+                      {moment(announcement.creationDate).format('MM/DD/YYYY')}
+                    </CardDate>
+                  </StyledUl>
+                </div>
               </CardText>
 
               <Col sm="4">
@@ -93,15 +104,21 @@ const Card = styled(Row)`
 const CardText = styled(Col)`
   padding-left: 20%;
   display: flex;
-  justify-content: center;
+  align-items: center;
 `;
 
-const CardTitle = styled.h2`
-  margin: auto;
+const CardTitle = styled.li`
+  font-size: 2em;
 `;
+
+const CardDate = styled.li``;
 
 const CardImg = styled.img`
   width: 40%;
+`;
+
+const StyledUl = styled.ul`
+  list-style-type: none;
 `;
 
 export default AnnouceList;
