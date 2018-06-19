@@ -19,36 +19,59 @@ class AnnouceList extends Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.announcements !== this.props.announcements) {
+      const announcements = this.props.announcements
+        .filter(announcement => {
+          return announcement.name;
+        })
+        .sort((a, b) => {
+          return new Date(b.creationDate) - new Date(a.creationDate);
+        });
       this.setState({
-        announcements: this.props.announcements
+        announcements
       });
     }
   }
 
+  sortByLastName = () => {
+    const announcements = this.props.announcements
+      .filter(announcement => {
+        return announcement.name;
+      })
+      .sort((a, b) => {
+        return b.name.last.localeCompare(a.name.last);
+      });
+    this.setState({
+      announcements
+    });
+  };
+
   render() {
     const { announcements } = this.state;
-    return announcements.map(announcement => {
-      if (announcement.name) {
-        return (
-          <Card>
-            <CardText sm="8">
-              <CardTitle>{`${announcement.name.first} ${
-                announcement.name.last
-              }`}</CardTitle>
-            </CardText>
-
-            <Col sm="4">
-              <CardImg
-                src={announcement.image || placeholder}
-                alt={`${announcement.name.first} ${
+    return (
+      <div>
+        <button onClick={this.sortByLastName}>Sort by last name</button>
+        {announcements.map(announcement => {
+          return (
+            <Card key={announcement._id}>
+              <CardText sm="8">
+                <CardTitle>{`${announcement.name.first} ${
                   announcement.name.last
-                } picture`}
-              />
-            </Col>
-          </Card>
-        );
-      }
-    });
+                }`}</CardTitle>
+              </CardText>
+
+              <Col sm="4">
+                <CardImg
+                  src={announcement.image || placeholder}
+                  alt={`${announcement.name.first} ${
+                    announcement.name.last
+                  } picture`}
+                />
+              </Col>
+            </Card>
+          );
+        })}
+      </div>
+    );
   }
 }
 
@@ -58,10 +81,12 @@ const Card = styled(Row)`
 
 const CardText = styled(Col)`
   padding-left: 20%;
+  display: flex;
+  justify-content: center;
 `;
 
 const CardTitle = styled.h2`
-  marign: auto;
+  margin: auto;
 `;
 
 const CardImg = styled.img`
