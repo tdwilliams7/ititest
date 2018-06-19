@@ -1,5 +1,11 @@
 ### Sample Project for Everdays.
 
+* on mount, will get list of announcements. if there is a name, it will display the name and the picture or a placeholder.
+
+* redux actions and reducers are in src/store
+
+* sort by last name will sort by last name, first click a - z, second z - a;
+
 Set up a github repository for the project, call it izitest
 
 Initialize a React application using Redux

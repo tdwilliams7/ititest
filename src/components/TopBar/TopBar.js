@@ -38,10 +38,7 @@ class TopBar extends Component {
           <Collapse isOpen={isOpen} navbar>
             <Nav className="ml-auto" navbar>
               <NavItem>
-                <NavLink
-                  href="/components/"
-                  style={{ color: 'rgb(17, 110, 182)' }}
-                >
+                <NavLink href="/" style={{ color: 'rgb(17, 110, 182)' }}>
                   Annoucements
                 </NavLink>
               </NavItem>

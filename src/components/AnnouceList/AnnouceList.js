@@ -2,12 +2,14 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Row, Col } from 'reactstrap';
 import placeholder from '../../assets/placeholder.png';
+import moment from 'moment';
 
 class AnnouceList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      announcements: []
+      announcements: [],
+      sortAZ: false
     };
   }
 
@@ -27,6 +29,7 @@ class AnnouceList extends Component {
           return new Date(b.creationDate) - new Date(a.creationDate);
         });
       this.setState({
+        ...this.state,
         announcements
       });
     }
@@ -38,9 +41,14 @@ class AnnouceList extends Component {
         return announcement.name;
       })
       .sort((a, b) => {
-        return b.name.last.localeCompare(a.name.last);
+        if (this.state.sortAZ) {
+          return b.name.last.localeCompare(a.name.last);
+        }
+        return a.name.last.localeCompare(b.name.last);
       });
     this.setState({
+      ...this.state,
+      sortAZ: !this.state.sortAZ,
       announcements
     });
   };
@@ -57,6 +65,9 @@ class AnnouceList extends Component {
                 <CardTitle>{`${announcement.name.first} ${
                   announcement.name.last
                 }`}</CardTitle>
+                <CardTitle style={{ fontSize: '1.3em' }}>
+                  {moment(announcement.creationDate).format('MM/DD/YYYY')}
+                </CardTitle>
               </CardText>
 
               <Col sm="4">
